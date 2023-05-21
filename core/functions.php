@@ -44,4 +44,10 @@ function isConnected(){
 	return false;
 }
 
+function redirectIfNotConnected(){
+	if(!isConnected()){
+		header("Location: login.php");
+	}
+}
+
 ?>
