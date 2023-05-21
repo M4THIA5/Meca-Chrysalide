@@ -1,7 +1,8 @@
 <?php session_start(); ?>
+<?php require('conf.inc.php'); ?>
+<?php require('core/functions.php'); ?>
 <?php include('template/head.php'); ?>
 <?php include('template/navbar.php'); ?>
-<?php include('core/functions.php'); ?>
 
 <main>
     <header class="baniere">
