@@ -1,7 +1,7 @@
 <?php session_start(); ?>
-<?php include('template/head.php'); ?>
-<?php include('template/navbar.php'); ?>
-<?php include('core/functions.php'); ?>
+<?php include('../template/head.php'); ?>
+<?php include('../template/navbar.php'); ?>
+<?php include('../core/functions.php'); ?>
 
 
 <h1 class="registertitle"> S'inscrire </h1>
@@ -54,4 +54,4 @@
         Vous êtes déjà inscrit ? <a href="login.php"><u>Connectez-vous</u></a>
     </p>
 </div>
-<?php include('template/footer.php'); ?>
+<?php include('../template/footer.php'); ?>

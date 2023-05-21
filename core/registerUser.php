@@ -22,15 +22,13 @@ Array ( [gender] => 0 [lastname] => Skrzypczyk [firstname] => yves [birthday] =>
 
 //Vérification macro
 //Vérification du nb et des champs required non vides
-if( count($_POST) != 9 
-	|| !isset($_POST["gender"])
+if( count($_POST) != 7
 	|| empty($_POST["lastname"])
 	|| empty($_POST["firstname"])
 	|| empty($_POST["birthday"])
-	|| !isset($_POST["city"])
 	|| empty($_POST["email"])
 	|| empty($_POST["pwd"])
-	|| empty($_POST["pwdConfirm"])
+	|| empty($_POST["pwdConfirmation"])
 	|| empty($_POST["cgu"])
 )
 {
@@ -41,24 +39,17 @@ if( count($_POST) != 9
 // -> Prénom
 // -> Nom
 // -> Email
-$gender = $_POST["gender"];
 $lastname = cleanLastname($_POST["lastname"]);
 $firstname = cleanFirstname($_POST["firstname"]);
 $email = cleanEmail($_POST["email"]);
 $pwd = $_POST["pwd"];
-$pwdConfirm = $_POST["pwdConfirm"];
-$city = $_POST["city"];
+$pwdConfirm = $_POST["pwdConfirmation"];
 $birthday = $_POST["birthday"];
 
 
 $listOfErrors = [];
 //Vérification micro des valeurs
 
-// Gender -> Soit 0, 1 ou 2
-$listOfGenders = [0,1,2];
-if( !in_array($gender, $listOfGenders) ){
-	$listOfErrors[] = "Le genre n'existe pas";
-}
 // Lastname -> >= 2 caractères
 if(strlen($lastname) < 2){
 	$listOfErrors[] = "Le nom doit faire plus de 2 caractères";
@@ -67,11 +58,6 @@ if(strlen($lastname) < 2){
 if(strlen($firstname) < 2){
 	$listOfErrors[] = "Le prénom doit faire plus de 2 caractères";
 }
-// City -> Soit 0, 1 ou 2
-$listOfCities = [0,1,2];
-if( !in_array($city, $listOfCities) ){
-	$listOfErrors[] = "La ville n'existe pas";
-}
 // Email -> Format
 if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
 	$listOfErrors[] = "L'email est incorrect";
@@ -79,7 +65,7 @@ if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
 
 	// Email -> Unicité
 	$connection = connectDB();
-	$queryPrepared = $connection->prepare("SELECT id FROM ".DB_PREFIX."user WHERE email=:email");
+	$queryPrepared = $connection->prepare("SELECT id FROM ".DB_PREFIX."utilisateur WHERE email=:email");
 	$queryPrepared->execute([
 								"email"=>$email
 							]);
@@ -127,7 +113,7 @@ if( $pwd != $pwdConfirm ){
 		$listOfErrors[] = "Votre mot de passe de confirmation ne correspond pas";
 }
 
-
+/*
 // Étape 2 : Générer un code de validation unique
 $codeValidation = md5(uniqid());
 
@@ -147,34 +133,33 @@ if (mail($destinataire, $sujet, $message, $headers)) {
 } else {
     echo "Une erreur s'est produite lors de l'envoi de l'email de validation.";
 }
+*/
 
 
 if( empty($listOfErrors))
 {
 	//SI OK
 	//Insertion du USER
-	$queryPrepared = $connection->prepare("INSERT INTO ".DB_PREFIX."user 
-										(gender, firstname, lastname, email, pwd, birthday, city)
+	$queryPrepared = $connection->prepare("INSERT INTO ".DB_PREFIX."utilisateur 
+										(prenom, nom, email, mdp, anniversaire, droitAdmin)
 										VALUES 
-										(:gender, :firstname, :lastname, :email, :pwd, :birthday, :city)");
+										(:prenom, :nom, :email, :mdp, :anniversaire, 0)");
 
 	$queryPrepared->execute([
-								"gender"=>$gender,
-								"firstname"=>$firstname,
-								"lastname"=>$lastname,
+								"prenom"=>$firstname,
+								"nom"=>$lastname,
 								"email"=>$email,
-								"pwd"=>password_hash($pwd, PASSWORD_DEFAULT),
-								"birthday"=>$birthday,
-								"city"=>$city
+								"mdp"=>password_hash($pwd, PASSWORD_DEFAULT),
+								"anniversaire"=>$birthday,
 							]);
 
 	//Redirection vers la page login
-	header("location: ../login.php");
+	header("location: ../user/login.php");
 
 }else{
 	//SI NOK
 	//Redirection sur register avec les erreurs
 	$_SESSION['errors'] = $listOfErrors;
-	header("location: ../register.php");
+	header("location: ../user/register.php");
 
 }
