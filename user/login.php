@@ -1,8 +1,8 @@
 <?php session_start(); ?>
-<?php include('../template/head.php'); ?>
-<?php include('../template/navbar.php'); ?>
 <?php require('../core/functions.php'); ?>
 <?php require('../conf.inc.php'); ?>
+<?php include('../template/head.php'); ?>
+<?php include('../template/navbar.php'); ?>
 
 <h1> Se connecter </h1>
 
