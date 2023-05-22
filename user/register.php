@@ -1,8 +1,8 @@
 <?php session_start(); ?>
+<?php require('../core/functions.php'); ?>
+<?php require('../conf.inc.php'); ?>
 <?php include('../template/head.php'); ?>
 <?php include('../template/navbar.php'); ?>
-<?php include('../core/functions.php'); ?>
-
 
 <h1 class="registertitle"> S'inscrire </h1>
 <div class="register">
