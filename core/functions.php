@@ -7,7 +7,7 @@ function Hello()
 function cleanLastname($lastname){
 	return strtoupper(trim($lastname));
 }
-
+// toto
 function cleanFirstname($firstname){
 	return ucwords(strtolower(trim($firstname)));
 }
