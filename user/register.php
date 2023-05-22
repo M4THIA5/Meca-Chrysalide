@@ -18,7 +18,7 @@
             }
             ?>
 
-            <form action="core/registerUser.php" method="POST">
+            <form action="../core/registerUser.php" method="POST">
                 <input class="form-control" name="lastname" id="lastname" placeholder="Votre Nom" required="required">
                 <input class="form-control" name="firstname" id="firstname" placeholder="Votre prénom" required="required">
 
@@ -51,7 +51,7 @@
 </div>
 <div class="alert alert-info">
     <p>
-        Vous êtes déjà inscrit ? <a href="login.php"><u>Connectez-vous</u></a>
+        Vous êtes déjà inscrit ? <a href="../login.php"><u>Connectez-vous</u></a>
     </p>
 </div>
 <?php include('../template/footer.php'); ?>
