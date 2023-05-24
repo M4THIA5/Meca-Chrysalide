@@ -12,7 +12,7 @@ redirectIfNotConnected();
 <?php
 
 	$connect = connectDB();
-	$queryPrepared = $connect->prepare("SELECT id, nom, prenom, email, anniversaire, telephone, dateInscription FROM ".DB_PREFIX."utilisateur WHERE email=:email" );
+	$queryPrepared = $connect->prepare("SELECT nom, prenom, email, anniversaire, telephone, dateInscription FROM ".DB_PREFIX."utilisateur WHERE email=:email" );
     $queryPrepared->execute(["email"=>$_SESSION["email"]]);
 	$myUser = $queryPrepared->fetchAll();
 ?>
@@ -20,7 +20,6 @@ redirectIfNotConnected();
 <table class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
 				<th>Prénom</th>
 				<th>Nom</th>
 				<th>Email</th>
@@ -34,13 +33,11 @@ redirectIfNotConnected();
 
 			foreach($myUser as $profile){
 				echo "<tr>";
-
-				echo "<td>".$profile["id"]."</td>";
-				echo "<td>".$profile["prenom"]."</td>";
-				echo "<td>".$profile["nom"]."</td>";
-				echo "<td>".$profile["email"]."</td>";
-				echo "<td>".$profile["anniversaire"]."</td>";
-				if(empty($profile["telephone"])){
+                echo "<td> <input class='form-control' name='lastname' id='lastname' placeholder=".$profile["nom"]."> </td>";
+				echo "<td> <input class='form-control' name='firstname' id='firstname' placeholder=".$profile['prenom']."></td>";
+				echo "<td> <input class='form-control' type='email' name='email' placeholder=".$profile['email']."></td>";
+                echo "<td>".$profile["anniversaire"]."</td>";
+                if(empty($profile["telephone"])){
 					echo "<td> Ajouter un numéro de téléphone </td>";
 				}else{
 					echo "<td>".$profile["telephone"]."</td>";
@@ -53,6 +50,6 @@ redirectIfNotConnected();
 		</tbody>
 	</table>
 
-	<a class="btn btn-primary" href="profileModify.php" role="button">Modifier le compte</a>
+	<a class="btn btn-primary" href="profile.php" role="button">Valider les modifications</a>
 
 <?php include('../template/footer.php'); ?>

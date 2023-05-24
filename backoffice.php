@@ -45,7 +45,6 @@ redirectIfNotConnected();
 
 					echo "</tr>";
 				}
-				print_r($user);
 			?>
 		</tbody>
 	</table>
