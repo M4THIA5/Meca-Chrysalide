@@ -49,9 +49,4 @@ redirectIfNotConnected();
             </tr>
 		</tbody>
 	</table>
-
-
-
-=======
->>>>>>> e468b0d28489a58c6add75a02c87f5c54037312d
 <?php include('../template/footer.php'); ?>

@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-<?php session_start(); ?>
-<?php require('core/functions.php'); ?>
-<?php require('conf.inc.php'); ?>
-<?php include('template/head.php'); ?>
-<?php include('template/navbar.php'); ?>
-=======
 <?php session_start();
 require('core/functions.php');
 require('conf.inc.php');
