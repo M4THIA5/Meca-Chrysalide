@@ -46,7 +46,7 @@ function isConnected(){
 
 function redirectIfNotConnected(){
 	if(!isConnected()){
-		header("Location: login.php");
+		header("Location: /MecaChrysalide/user/login.php");
 	}
 }
 
