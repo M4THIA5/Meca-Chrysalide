@@ -15,7 +15,7 @@ $newPwd = $_POST["nouveauPwd"];
 $newPwdConfirm = $_POST["confirmPwd"];
 
 $listOfErrors = [];
-//Vérification micro des valeurs
+//Vérification micro des valeurs test
 
 $connection = connectDB();
 // Lastname -> >= 2 caractères
