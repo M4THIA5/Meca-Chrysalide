@@ -14,7 +14,6 @@ $connect = connectDB();
 $results = $connect->query("SELECT * FROM " . DB_PREFIX . "utilisateur");
 
 $listOfUsers = $results->fetchAll();
-
 ?>
 
 <table class="table">
