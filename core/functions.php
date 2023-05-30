@@ -50,4 +50,10 @@ function redirectIfNotConnected(){
 	}
 }
 
+function redirectIfConnected(){
+	if(isConnected()){
+		header("Location: /MecaChrysalide/index.php");
+	}
+}
+
 ?>
