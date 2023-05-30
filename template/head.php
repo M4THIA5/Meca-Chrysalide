@@ -6,7 +6,7 @@
     <meta name="description" content="Meca Chrysalide">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meca-Chrysalide par Félix Boyer</title>
-    <link href="/Meca-Chrysalide-main/style/Style.css" rel="stylesheet">
+    <link href="/MecaChrysalide/style/Style.css" rel="stylesheet">
 
 
 
