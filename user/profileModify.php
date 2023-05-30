@@ -27,17 +27,15 @@ redirectIfNotConnected();
 					<th>Email</th>
 					<th>Date de naissance</th>
 					<th>Téléphone</th>
-					<th>Date d'inscription</th>
 					<th>Mot de passe actuel</th>
 					<th>nouveau mot de passe</th>
 					<th>confirmer le nouveau mot de passe</th>
+					<th>Date d'inscription</th>
 				</tr>
 			</thead>
 			<tbody>
-			<?php
-
-				
-					echo "<tr>";
+				<tr>
+				<?php
 					echo "<td> <input class='form-control' type='text' name='lastname' id='lastname' placeholder=".$profil["nom"]."> </td>";
 					echo "<td> <input class='form-control' type='text' name='firstname' id='firstname' placeholder=".$profil['prenom']."></td>";
 					echo "<td> <input class='form-control' type='email' name='email' placeholder=".$profil['email']."></td>";
@@ -47,12 +45,11 @@ redirectIfNotConnected();
 					}else{
 						echo "<td>".$profil["telephone"]."</td>";
 					}
-					echo "<td>".$profil["dateInscription"]."</td>";
-				
-			?>
-					<td><input class="form-control" type="text" name="pwdActuel" id="mdpActuel" ></td>
-					<td><input class="form-control" type="text" name="nouveauPwd" id="nouveauMdp" ></td>
-					<td><input class="form-control" type="text" name="confirmPwd" id="confirmMdp" ></td>
+				?>
+						<td><input class="form-control" type="text" name="pwdActuel" id="mdpActuel" ></td>
+						<td><input class="form-control" type="text" name="nouveauPwd" id="nouveauMdp" ></td>
+						<td><input class="form-control" type="text" name="confirmPwd" id="confirmMdp" ></td>
+				<?php echo "<td>".$profil["dateInscription"]."</td>";?>
 				</tr>
 			</tbody>
 		</table>

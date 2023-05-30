@@ -12,7 +12,7 @@ redirectIfNotConnected();?>
 	$connect = connectDB();
 	$queryPrepared = $connect->prepare("SELECT nom, prenom, email, anniversaire, telephone, dateInscription FROM ".DB_PREFIX."utilisateur WHERE email=:email" );
     $queryPrepared->execute(["email"=>$_SESSION["email"]]);
-	$myUser = $queryPrepared->fetchAll();
+	$profile = $queryPrepared->fetch();
 ?>
 	<table class="table">
 			<thead>
@@ -27,8 +27,6 @@ redirectIfNotConnected();?>
 			</thead>
 			<tbody>
 			<?php
-
-				foreach($myUser as $profile){
 					echo "<tr>";
 					echo "<td>".$profile["nom"]."</td>";
 					echo "<td>".$profile['prenom']."</td>";
@@ -40,13 +38,11 @@ redirectIfNotConnected();?>
 						echo "<td>".$profile["telephone"]."</td>";
 					}
 					echo "<td>".$profile["dateInscription"]."</td>";
-				}
 			?>
 				</tr>
 			</tbody>
 		</table>
-	<label>
-        <button class="btn btn-primary">Valider les modifications</button>
+        <a class="btn btn-primary"href="profileModify.php">modifier le profil</a>
     </label>
 
 <?php include('../template/footer.php'); ?>
