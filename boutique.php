@@ -1,61 +1,33 @@
-<?php session_start();
-require('core/functions.php');
-require('conf.inc.php');
-include('template/head.php');
-include('template/navbar.php'); 
-redirectIfNotConnected();
-?>
+<?php session_start(); ?>
+<?php require('core/functions.php'); ?>
+<?php require('conf.inc.php'); ?>
+<?php include('template/head.php'); ?>
+<?php include('template/navbar.php'); ?>
 
 <h1> Boutique </h1>
 
-<h3> Ici, vous pouvez acquérir une des oeuvres disponibles et ainsi soutenir l'artsite ! </h2>
+<h3> Ici, vous pouvez acquérir une des oeuvres disponibles et ainsi soutenir l'artiste ! </h2>
 
     <section>
         <h4> Oeuvres disponibles </h4>
         <div class="boutique">
-            <figure> <img alt="une des oeuvre les plus populaires !" src="assets/img/chat1.jpg">
-                <figcaption> Un Chat </figcaption>
-                <h4> Prix : 1000€ </h4>
-                </a>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
-            <figure> <img alt="une des oeuvre les plus populaires !" src="assets/img/chat2.jpg">
-                <figcaption> Un autre Chat </figcaption>
-                <h4> Prix : 890€ </h4>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
-            <figure> <img alt="une des oeuvre les plus populaires !" src="assets/img/chat3.jpg">
-                <figcaption> Encore un autre Chat </figcaption>
-                <h4> Prix : 450€ </h4>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
-            <figure> <img alt="une des oeuvre les plus populaires !" src="assets/img/chat3.jpg">
-                <figcaption> Encore un autre Chat </figcaption>
-                <h4> Prix : 450€ </h4>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
-            <figure> <img alt="une des oeuvre les plus populaires !" src="assets/img/chat3.jpg">
-                <figcaption> Encore un autre Chat </figcaption>
-                <h4> Prix : 450€ </h4>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
-            <figure> <img alt="une des oeuvre les plus populaires !" src="assets/img/chat3.jpg">
-                <figcaption> Encore un autre Chat </figcaption>
-                <h4> Prix : 450€ </h4>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
+            <?php
+
+            $connect = connectDB();
+            $queryPrepared = $connect->query("SELECT * FROM " . DB_PREFIX . "produit");
+            $produits = $queryPrepared->fetchAll();
+
+            foreach ($produits as $produit) {
+                echo '<figure> <img alt="' . $produit["description"] . '" src="' . $produit["image"] . '">
+                <figcaption> ' . $produit["description"] . ' </figcaption>
+                <h4> Prix : ' . $produit["prix"] . ' </h4>';
+                if ($produit["vendu"] == 0) {
+                    echo '
+                    <a href="facturation.php?id=' . $produit["idProduit"] . '"><button type="button">Acheter</button></a>';
+                }
+                echo '</a></figure>';
+            }
+            ?>
         </div>
     </section>
 

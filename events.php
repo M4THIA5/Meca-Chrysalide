@@ -1,11 +1,8 @@
-<?php session_start();
-require('core/functions.php');
-require('conf.inc.php');
-include('template/head.php');
-include('template/navbar.php'); 
-redirectIfNotConnected();
-?>
-
+<?php session_start(); ?>
+<?php require('core/functions.php'); ?>
+<?php require('conf.inc.php'); ?>
+<?php include('template/head.php'); ?>
+<?php include('template/navbar.php'); ?>
 <h1> Evènements </h1>
 
 <h3> Retrouvez Meca-Chrysalide dans les galeries suivantes : </h2>

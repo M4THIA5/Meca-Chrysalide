@@ -221,5 +221,22 @@ input {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
     padding: 1rem;
+}
 
+.coordonnees {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+
+ul.fil-ariane {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.facturation {
+    text-align: center;
 }
