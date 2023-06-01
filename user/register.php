@@ -43,6 +43,7 @@
                 <a href="cgu.php" target="_blank">(Conditions Générales d'Utilisation)</a>
 
             </label>
+            <!-- Ajout du capcha --> 
             <input class="form-check-input" type="checkbox" name="cgu" id="cgu">
             <label>
                 <button>S'inscrire</button>
