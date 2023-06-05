@@ -2,38 +2,40 @@
 session_start();
 require "../conf.inc.php";
 require "functions.php";
-redirectIfNotConnected();
 
 $connect = connectDB();
 $insertCoordonnees = $connect->prepare("INSERT INTO " . DB_PREFIX . "coordonnees 
-										(nomDestinataire, prenomDestinataire, rue, ville, codePostal, telephone)
+										(nomDestinataire, prenomDestinataire, rue, ville, codePostal, telephone, email)
 										VALUES 
-										(:nomDestinataire, :prenomDestinataire, :rue, :ville, :codePostal, :telephone)");
+										(:nomDestinataire, :prenomDestinataire, :rue, :ville, :codePostal, :telephone, :email)");
 
 
 $insertCoordonnees->execute([
-    "nomDestinataire" => $_POST['nom'],
-    "prenomDestinataire" => $_POST['prenom'],
-    "rue" => $_POST['rue'],
-    "ville" => $_POST['ville'],
-    "codePostal" => $_POST['codePostal'],
-    "telephone" => $_POST['telephone']
+    "nomDestinataire" => $_SESSION['nom'],
+    "prenomDestinataire" => $_SESSION['prenom'],
+    "rue" => $_SESSION['rue'],
+    "ville" => $_SESSION['ville'],
+    "codePostal" => $_SESSION['codepostal'],
+    "telephone" => $_SESSION['telephone'],
+    "email" => $_SESSION['email']
+
 ]);
 
 $fkIdCoordonnees = $connect->lastInsertId();
 
 
 $insertCommand = $connect->prepare("INSERT INTO " . DB_PREFIX . "commande 
-										(fkIdUtilisateur, fkIdProduit, fkIdCoordonnees)
+										(fkIdUtilisateur, fkIdProduit, fkIdCoordonnees, est_acceptee)
 										VALUES 
-										(:fkIdUtilisateur, :fkIdProduit, :fkIdCoordonnees)");
+										(:fkIdUtilisateur, :fkIdProduit, :fkIdCoordonnees, 0)");
 
 $insertCommand->execute([
-    "fkIdUtilisateur" => $_POST['idUtilisateur'],
-    "fkIdProduit" => $_POST['idProduit'],
+    "fkIdUtilisateur" => $_SESSION['user_id'],
+    "fkIdProduit" => $_SESSION['idProduit'],
     "fkIdCoordonnees" => $fkIdCoordonnees
 ]);
 
-header("Location: ../boutique.php");
+header("Location: ../confirmfacture.php");
+exit();
 
 ?>

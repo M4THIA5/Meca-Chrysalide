@@ -11,24 +11,25 @@
 <?php
 
 $connect = connectDB();
-$results = $connect->query("SELECT * FROM " . DB_PREFIX . "utilisateur");
+$results = $connect->query("SELECT * FROM " . DB_PREFIX . "utilisateur ORDER BY id ASC");
 
-$listOfUsers = $results->fetchAll();
+
+$listOfUsers = $results->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
-
-<table class="table">
-	<thead>
-		<tr>
-			<th>Id</th>
-			<th>Prénom</th>
-			<th>Nom</th>
-			<th>Email</th>
-			<th>Date de naissance</th>
-			<th>Date d'insertion</th>
-			<th>Actions</th>
-		</tr>
-	</thead>
-	<tbody>
+<section class="backoffice-users">
+	<h2>Utilisateurs</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Prénom</th>
+				<th>Nom</th>
+				<th>Email</th>
+				<th>Date de naissance</th>
+				<th>Date d'insertion</th>
+				<th>Actions</th>
+		</thead>
 		<?php
 
 		foreach ($listOfUsers as $user) {
@@ -40,13 +41,16 @@ $listOfUsers = $results->fetchAll();
 			echo "<td>" . $user["email"] . "</td>";
 			echo "<td>" . $user["anniversaire"] . "</td>";
 			echo "<td>" . $user["dateInscription"] . "</td>";
-			echo "<td><a href='core/removeUser.php?id=" . $user["id"] . ">Supprimer</a></td>";
+			echo "<td><a href='core/removeUser.php?id=" . $user["id"] . "'>Supprimer</a></td>";
 
 			echo "</tr>";
 		}
 
+
 		?>
-	</tbody>
-</table>
+		</tbody>
+	</table>
+</section>
+<a href="backoffice_commandes.php">Gerer les Commandes</a>
 
 <?php include('template/footer.php'); ?>
