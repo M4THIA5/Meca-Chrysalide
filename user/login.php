@@ -23,7 +23,7 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])) {
     } else if (password_verify($pwd, $result["mdp"])) {
         $_SESSION['email'] = $email;
         $_SESSION['login'] = 1;
-        $_SESSION['id'] = $result["id"];
+        $_SESSION['user_id'] = $result["id"];
         header("Location: ../index.php");
     } else {
         echo "Identifiants incorrects";

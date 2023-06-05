@@ -3,6 +3,10 @@ session_start();
 require "../conf.inc.php";
 require "functions.php";
 
+require '../assets/PHPMailer/src/Exception.php';
+require '../assets/PHPMailer/src/PHPMailer.php';
+require '../assets/PHPMailer/src/SMTP.php';
+
 
 
 if (
@@ -94,36 +98,22 @@ if ($pwd != $pwdConfirm) {
 	$listOfErrors[] = "Votre mot de passe de confirmation ne correspond pas";
 }
 
-/*
-// Étape 2 : Générer un code de validation unique
-$codeValidation = md5(uniqid());
 
-// Étape 3 : Enregistrer le code de validation dans la base de données ou tout autre système de stockage associé à l'utilisateur
 
-// Étape 4 : Préparer l'email de validation
-$destinataire = $email;
-$sujet = "Validation de votre compte";
-$message = "Bienvenue sur notre site ! Veuillez cliquer sur le lien suivant pour valider votre compte : <a href='http://www.example.com/validation.php?code=$codeValidation'>Valider mon compte</a>";
-
-$headers = "From: votreadresse@example.com\r\n";
-$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-
-// Étape 5 : Envoyer l'email de validation
-if (mail($destinataire, $sujet, $message, $headers)) {
-	echo "Un email de validation a été envoyé à votre adresse email. Veuillez vérifier votre boîte de réception.";
-} else {
-	echo "Une erreur s'est produite lors de l'envoi de l'email de validation.";
-}
-*/
 
 
 if (empty($listOfErrors)) {
 	//SI OK
+	// Creation du code de confirmation unique
+
+	// $codeValidation = md5(uniqid());
+
 	//Insertion du USER
+
 	$queryPrepared = $connection->prepare("INSERT INTO " . DB_PREFIX . "utilisateur 
-										(prenom, nom, email, mdp, anniversaire, droitAdmin)
+										(prenom, nom, email, mdp, anniversaire, droitAdmin, codeValidation, est_valide)
 										VALUES 
-										(:prenom, :nom, :email, :mdp, :anniversaire, 0)");
+										(:prenom, :nom, :email, :mdp, :anniversaire, 0, :codeValidation, 0)");
 
 	$queryPrepared->execute([
 		"prenom" => $firstname,
@@ -131,8 +121,34 @@ if (empty($listOfErrors)) {
 		"email" => $email,
 		"mdp" => password_hash($pwd, PASSWORD_DEFAULT),
 		"anniversaire" => $anniversaire,
+		"codeValidation" => $codeValidation,
 	]);
-
+	/*
+		   //Envoi du mail de confirmation
+		   $mail = new PHPMailer\PHPMailer\PHPMailer();
+		   $mail->isSMTP();
+		   $mail->Host = 'ssl0.ovh.net';
+		   $mail->SMTPAuth = true;
+		   $mail->SMTPSecure = 'ssl';
+		   $mail->Port = 465;
+		   $mail->Username = 'MecaChrysalide2@gmail.com';
+		   $mail->Password = '';
+		   $mail->setFrom('MecaChrysalide2@gmail.com', 'MecaChrysalide');
+		   $mail->addAddress($email, $firstname . " " . $lastname);
+		   $mail->isHTML(true);
+		   $mail->Subject = 'Confirmation de votre inscription';
+		   $mail->Body = "Bonjour $firstname $lastname,<br>
+						   Veuillez cliquer sur le lien suivant pour confirmer votre inscription : <br>
+						   <a href='http://54.36.183.20/MecaChrysalide/core/validation.php?code=$codeValidation'>Confirmer mon inscription</a>";
+		   $mail->AltBody = "Bonjour $firstname $lastname,
+						   Veuillez cliquer sur le lien suivant pour confirmer votre inscription : 
+						   http://54.36.183.20/MecaChrysalide/core/validation.php?code=$codeValidation";
+		   if (!$mail->send()) {
+			   echo 'Erreur lors de l\'envoi du mail : ' . $mail->ErrorInfo;
+		   } else {
+			   echo 'Mail envoyé';
+		   }
+	   */
 	//Redirection vers la page login
 	header("location: ../user/login.php");
 

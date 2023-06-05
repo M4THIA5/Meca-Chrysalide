@@ -9,6 +9,7 @@
             <li><a class="navbar-link" href="/MecaChrysalide/user/login.php">Se connecter</a></li>
         <?php } else { ?>
             <li><a class="navbar-link" href="/MecaChrysalide/user/logout.php">Se déconnecter</a></li>
+            <li><a class="navbar-link" href="/MecaChrysalide/user/profileModify.php">Mon profil</a></li>
         <?php } ?>
         <li><a class="navbar-link" href="/MecaChrysalide/backoffice.php">Panneau de configuration
                 administrateur</a></li>

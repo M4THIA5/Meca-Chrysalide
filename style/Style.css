@@ -144,27 +144,6 @@ figure {
     border: rgb(207, 166, 0) 4px solid;
 }
 
-.rating {
-    unicode-bidi: bidi-override;
-    direction: rtl;
-    text-align: end;
-    font-size: 2rem;
-}
-
-.rating>span {
-    display: inline-block;
-    position: relative;
-    width: 1.1em;
-    color: rgb(207, 166, 0);
-}
-
-.rating>span:hover:before,
-.rating>span:hover~span:before {
-    content: "\2605";
-    position: absolute;
-    transition: color 0.4s;
-}
-
 h2 {
     font-family: 'Pacifico-Regular', sans-serif;
     font-weight: 500;
@@ -239,4 +218,25 @@ ul.fil-ariane {
 
 .facturation {
     text-align: center;
+}
+
+section .recapfacture {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: rgb(207, 166, 0) 4px solid;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+}
+
+section .recapfacture b {
+    font-size: 1rem;
+}
+
+.backoffice-users table {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
