@@ -13,6 +13,7 @@
 $connect = connectDB();
 $results = $connect->query("SELECT * FROM " . DB_PREFIX . "utilisateur ORDER BY id ASC");
 
+
 $listOfUsers = $results->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
