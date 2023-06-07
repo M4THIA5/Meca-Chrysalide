@@ -24,6 +24,8 @@
                 if ($produit["vendu"] == 0) {
                     echo '
                     <a href="facturation.php?id=' . $produit["idProduit"] . '"><button type="button">Acheter</button></a>';
+                } else {
+                    echo '<h4> Vendu </h4>';
                 }
                 echo '</a></figure>';
             }

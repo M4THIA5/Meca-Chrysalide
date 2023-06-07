@@ -48,18 +48,10 @@ function redirectIfNotConnected()
 		header("Location: /MecaChrysalide/user/login.php");
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
+function generateSortLink($text, $sortKey)
+{
+	$_GET['sort'] = isset($_GET['sort']) ? $_GET['sort'] : 'idCommande';
+	$_GET['order'] = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC';
 
 function selectImageForCapcha(){
 	// Chemin du dossier contenant les images
@@ -109,4 +101,8 @@ function cutImageForCapcha($imagePath){
 	}
 }
 
+	$order = $_GET['sort'] === $sortKey && $_GET['order'] === 'asc' ? 'desc' : 'asc';
+	$url = "backoffice_commandes.php?sort=$sortKey&order=$order";
+	return "<a href=\"$url\">$text</a>";
+}
 ?>
