@@ -44,7 +44,17 @@
             </div>
             <center>
                 <div>
-                    <?php cutImageForCapcha(selectImageForCapcha())?>
+                    <?php // Appel de la fonction pour obtenir l'image GD
+                        $imageGD = gdImage(selectImageForCapcha());
+                        if ($imageGD !== null) {
+                            // Utilisation de l'image GD, par exemple, affichage ou manipulation ultérieure
+                            // ...
+
+                            // Libération de la mémoire utilisée par l'image GD
+                            imagedestroy($imageGD);
+                            
+                        }
+                    ?>
                 </div>
                 <label>
                     <button>S'inscrire</button>

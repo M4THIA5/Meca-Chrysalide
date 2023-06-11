@@ -58,7 +58,7 @@ function generateSortLink($text, $sortKey)
 	return "<a href=\"$url\">$text</a>";
 }
 
-function selectImageForCapcha(){
+function selectImageForCapcha() {
 	// Chemin du dossier contenant les images
 	$dossier = '../assets/capcha/';
 
@@ -70,40 +70,95 @@ function selectImageForCapcha(){
 
 	// Vérification s'il y a des images dans le dossier
 	if (count($fichiers) > 0) {
-		// Sélection aléatoire d'un fichier,, son chemin est stocké dans la variable
+		// Sélection aléatoire d'un fichier, son chemin est stocké dans la variable
 		$imageCapchaAleatoire = $fichiers[array_rand($fichiers)];
-		$imageCapchaAleatoire = substr($imageCapchaAleatoire,3);	//supprime les 3 premiers caractères (../)
-		$imageCapcha= "/MecaChrysalide/";
-		$imageCapcha .= $imageCapchaAleatoire;	//concatène les deux chaînes de caractères pour obtenir le chemin absolu
+		$imageCapchaAleatoire = substr($imageCapchaAleatoire, 3); // Supprime les 3 premiers caractères (../)
+		$imageCapcha = "/MecaChrysalide/" . $imageCapchaAleatoire; // Concatène les deux chaînes de caractères pour obtenir le chemin absolu
+
+		// Affichage de l'image
+		echo '<img src="'.$imageCapcha.'" alt="image">';
+		
 		return $imageCapcha;
 	} else {
 		echo 'Aucune image disponible.';
 	}
 }
 
-function cutImageForCapcha($imagePath){
+function gdImage($cheminImage) {
+	$cheminImage = pathCapcha . $cheminImage;
 
-	echo '<img src="'.$imagePath.'" alt="image">';
-	// Chargement de l'image
-	$image = imagecreatefromjpeg($imagePath);
-
-	// Dimensions de l'image
-	$largeur = 150;
-	$hauteur = 150;
-	$image = imagecreatetruecolor($largeur, $hauteur);
-
-	// Dimensions des morceaux
-	$largeurMorceau = $largeur / 3;
-	$hauteurMorceau = $hauteur / 3;
-
-	// Découpage et enregistrement des morceaux
-	for ($i = 0; $i < 3; $i++) {
-		for ($j = 0; $j < 3; $j++) {
-			// Création du morceau
-			$morceau = imagecreatetruecolor($largeurMorceau, $hauteurMorceau);
-			echo '<img src="'.$morceau.'" alt="morceau image">';
-		}
+	// Vérification si le fichier existe
+	if (!file_exists($cheminImage)) {
+		echo 'Le fichier image spécifié n\'existe pas.';
+		return null;
 	}
+
+	// Récupération de l'extension du fichier
+	$extension = pathinfo($cheminImage, PATHINFO_EXTENSION);
+
+	// Vérification de l'extension et chargement de l'image appropriée
+	switch ($extension) {
+		case 'jpeg':
+		case 'jpg':
+			$image = imagecreatefromjpeg($cheminImage);
+			break;
+		case 'png':
+			$image = imagecreatefrompng($cheminImage);
+			break;
+		case 'gif':
+			$image = imagecreatefromgif($cheminImage);
+			break;
+		default:
+			echo 'Format d\'image non pris en charge.';
+			return null;
+	}
+
+	// Vérification si l'image a été créée avec succès
+	if ($image === false) {
+		echo 'Erreur lors de la création de l\'image.';
+		return null;
+	}
+
+	// Redimensionner l'image
+	$imageResized = resizeImageGD($image);
+
+	// Envoi de l'image redimensionnée avec le bon en-tête de type MIME
+	switch ($extension) {
+		case 'jpeg':
+		case 'jpg':
+			header('Content-Type: image/jpeg');
+			imagejpeg($imageResized);
+			break;
+		case 'png':
+			header('Content-Type: image/png');
+			imagepng($imageResized);
+			break;
+		case 'gif':
+			header('Content-Type: image/gif');
+			imagegif($imageResized);
+			break;
+		default:
+			echo 'Impossible d\'afficher l\'image.';
+			return null;
+	}
+
+	// Libération de la mémoire en détruisant l'image'
+	imagedestroy($imageResized);
+
+	return $image;
 }
+
+
+function resizeImageGD($image){
+	// Redimensionner l'image
+	$image_resized = imagecreatetruecolor(150, 150);
+	imagecopyresampled($image_resized, $image, 0, 0, 0, 0, 150, 150, imagesx($image), imagesy($image));
+	return $image_resized;
+}
+
+
+
+
+
 
 ?>
