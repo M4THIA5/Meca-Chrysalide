@@ -51,6 +51,8 @@ $listOfUsers = $results->fetchAll(PDO::FETCH_ASSOC);
 		</tbody>
 	</table>
 </section>
-<a href="backoffice_commandes.php">Gerer les Commandes</a>
+<a href="backoffice_commandes.php">
+	<h4><u>Gerer les Commandes</u></h4>
+</a>
 
 <?php include('template/footer.php'); ?>

@@ -21,17 +21,20 @@ if (isset($_GET['sort'])) {
 $sortBy = isset($_GET['sort']) ? $_GET['sort'] : 'idCommande';
 $sortOrder = isset($_GET['order']) && $_GET['order'] === 'desc' ? 'DESC' : 'ASC';
 
+$orderClause = "ORDER BY $sortBy $sortOrder;";
 $queryPrepared = $connect->prepare("SELECT c.idCommande, c.dateCommande, u.nom, u.prenom, u.email, p.nomProduit, p.idProduit, c.est_acceptee
-FROM " . DB_PREFIX . "commande c
-INNER JOIN " . DB_PREFIX . "utilisateur u ON c.fkIdUtilisateur = u.id
-INNER JOIN " . DB_PREFIX . "produit p ON c.fkIdProduit = p.idProduit
-INNER JOIN " . DB_PREFIX . "coordonnees coord ON c.fkIdCoordonnees = coord.idCo
-ORDER BY c.dateCommande DESC;"
+    FROM " . DB_PREFIX . "commande c
+    INNER JOIN " . DB_PREFIX . "utilisateur u ON c.fkIdUtilisateur = u.id
+    INNER JOIN " . DB_PREFIX . "produit p ON c.fkIdProduit = p.idProduit
+    INNER JOIN " . DB_PREFIX . "coordonnees coord ON c.fkIdCoordonnees = coord.idCo
+    $orderClause"
+
+
 );
 $queryPrepared->execute();
 $results = $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
 echo '<table>
-        <tr>
+        <tr class="entete">
             <th>' . generateSortLink('ID Commande', 'idCommande') . '</th>
             <th>' . generateSortLink('Date Commande', 'dateCommande') . '</th>
             <th>' . generateSortLink('Nom', 'nom') . '</th>
@@ -49,13 +52,21 @@ foreach ($results as $commande) {
             <td>' . $commande['prenom'] . '</td>
             <td>' . $commande['email'] . '</td>
             <td>' . $commande['nomProduit'] . '</td>
-            <td>
-                <form action="core/acceptCommand.php" method="post">
-                    <input type="hidden" name="idCommande" value="' . $commande['idCommande'] . '">
-                    <input type="submit" value="Accepter">
-                </form>
-            </td>
-          </tr>';
+            <td>' ?>
+    <?php if ($commande['est_acceptee'] == '0') { ?>
+        <form action="core/acceptCommand.php" method="post">
+            <input type="hidden" name="idCommande" value="<?php echo $commande['idCommande']; ?>">
+            <input type="submit" value="Accepter">
+        </form>
+    <?php } elseif ($commande['est_acceptee'] == '1') { ?>
+        <p class="approved">Acceptée</p>
+    <?php } elseif ($commande['est_acceptee'] == '-1') { ?>
+        <p class="denied">Refusée</p>
+    <?php } ?>
+    </td>
+    </tr>
+    <?php
 }
+echo '</table>
 
-echo '</table>';
+</table>';

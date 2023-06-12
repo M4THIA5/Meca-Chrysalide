@@ -15,7 +15,7 @@ $insertCoordonnees->execute([
     "prenomDestinataire" => $_SESSION['prenom'],
     "rue" => $_SESSION['rue'],
     "ville" => $_SESSION['ville'],
-    "codePostal" => $_SESSION['codepostal'],
+    "codePostal" => $_SESSION['codePostal'],
     "telephone" => $_SESSION['telephone'],
     "email" => $_SESSION['email']
 

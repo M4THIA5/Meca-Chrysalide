@@ -4,19 +4,6 @@
 <?php include('template/head.php'); ?>
 <?php include('template/navbar.php'); ?>
 
-<?php
-$_SESSION['nom'] = $_POST['nom'];
-$_SESSION['prenom'] = $_POST['prenom'];
-$_SESSION['rue'] = $_POST['rue'];
-$_SESSION['codepostal'] = $_POST['codePostal'];
-$_SESSION['ville'] = $_POST['ville'];
-$_SESSION['telephone'] = $_POST['telephone'];
-$_SESSION['email'] = $_POST['email'];
-$_SESSION['idProduit'] = $_POST['idProduit'];
-
-
-?>
-
 <h1> Recapitulatif </h1>
 
 <ul class="fil-ariane">
@@ -33,10 +20,11 @@ $_SESSION['idProduit'] = $_POST['idProduit'];
 
 <section class="recapfacturation">
     <h2> Votre commande </h2>
-    <?php echo 'Nom : ' . $_SESSION['nom'] . '<br>
+    <?php echo 'Article numéro : ' . $_SESSION['idProduit'] . '<br> 
+    Nom : ' . $_SESSION['nom'] . '<br>
  Prénom : ' . $_SESSION['prenom'] . '<br>
  Adresse : ' . $_SESSION['rue'] . '<br>
-    Code postal : ' . $_SESSION['codepostal'] . '<br>
+    Code postal : ' . $_SESSION['codePostal'] . '<br>
     Ville : ' . $_SESSION['ville'] . '<br>
     Téléphone : ' . $_SESSION['telephone'] . '<br>
     Email : ' . $_SESSION['email'] . '<br>'; ?>
