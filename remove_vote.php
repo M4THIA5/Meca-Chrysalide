@@ -7,32 +7,32 @@ redirectIfNotConnected();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $connect = connectDB();
     $produitId = $_POST['produitId'];
+    $idUser = $_SESSION['user_id'];
 
-    // Vérifier si le produit existe
+    // Vérifier si l'utilisateur a déjà voté pour ce produit
     $queryPrepared = $connect->prepare("
-        SELECT idProduit, nbVote
-        FROM " . DB_PREFIX . "produit
-        WHERE idProduit = :produitId
+        SELECT id
+        FROM " . DB_PREFIX . "votes
+        WHERE fk_id_utilisateur = :idUser AND fk_id_produit = :produitId
     ");
-    $queryPrepared->execute(['produitId' => $produitId]);
-    $produit = $queryPrepared->fetch();
+    $queryPrepared->execute(['idUser' => $idUser, 'produitId' => $produitId]);
+    $vote = $queryPrepared->fetch();
 
-    if ($produit) {
-        // Vérifier si l'utilisateur a déjà voté pour ce produit
-        $hasVoted = isset($_SESSION['votes'][$produitId]);
-        if ($hasVoted) {
-            // Mettre à jour le nombre de votes
-            $newVoteCount = $produit['nbVote'] - 1;
-            $queryPrepared = $connect->prepare("
-                UPDATE " . DB_PREFIX . "produit
-                SET nbVote = :nbVote
-                WHERE idProduit = :produitId
-            ");
-            $queryPrepared->execute(['nbVote' => $newVoteCount, 'produitId' => $produitId]);
+    if ($vote) {
+        // Supprimer le vote de la table "votes"
+        $queryPrepared = $connect->prepare("
+            DELETE FROM " . DB_PREFIX . "votes
+            WHERE id = :id
+        ");
+        $queryPrepared->execute(['id' => $vote['id']]);
 
-            // Supprimer le vote de l'utilisateur de la session
-            unset($_SESSION['votes'][$produitId]);
-        }
+        // Mettre à jour le nombre de votes dans la table "produit"
+        $queryPrepared = $connect->prepare("
+            UPDATE " . DB_PREFIX . "produit
+            SET nbVote = nbVote - 1
+            WHERE idProduit = :produitId
+        ");
+        $queryPrepared->execute(['produitId' => $produitId]);
     }
 }
 

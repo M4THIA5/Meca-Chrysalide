@@ -6,33 +6,36 @@ redirectIfNotConnected();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $connect = connectDB();
-    $idProduit = $_POST['produitId'];
+    $produitId = $_POST['produitId'];
+    $idUser = $_SESSION['user_id'];
 
-    // Vérifier si le produit existe
+    // Vérifier si l'utilisateur a déjà voté pour ce produit
     $queryPrepared = $connect->prepare("
-        SELECT idProduit, nbVote
-        FROM " . DB_PREFIX . "produit
-        WHERE idProduit = :idProduit
+        SELECT id
+        FROM " . DB_PREFIX . "votes
+        WHERE fk_id_utilisateur = :idUser AND fk_id_produit = :produitId
     ");
-    $queryPrepared->execute(['idProduit' => $idProduit]);
-    $produit = $queryPrepared->fetch();
+    $queryPrepared->execute(['idUser' => $idUser, 'produitId' => $produitId]);
+    $vote = $queryPrepared->fetch();
 
-    if ($produit) {
-        // Vérifier si l'utilisateur a déjà voté pour ce produit
-        $hasVoted = isset($_SESSION['votes'][$idProduit]);
-        if (!$hasVoted) {
-            // Mettre à jour le nombre de votes
-            $newVoteCount = $produit['nbVote'] + 1;
-            $queryPrepared = $connect->prepare("
-                UPDATE " . DB_PREFIX . "produit
-                SET nbVote = :nbVote
-                WHERE idProduit = :idProduit
-            ");
-            $queryPrepared->execute(['nbVote' => $newVoteCount, 'idProduit' => $idProduit]);
+    if (!$vote) {
+        // Insérer un nouveau vote dans la table "votes"
+        $queryPrepared = $connect->prepare("
+            INSERT INTO " . DB_PREFIX . "votes (fk_id_utilisateur, fk_id_produit)
+            VALUES (:idUser, :produitId)
+        ");
+        $queryPrepared->execute(['idUser' => $idUser, 'produitId' => $produitId]);
 
-            // Enregistrer le vote de l'utilisateur dans la session
-            $_SESSION['votes'][$idProduit] = true;
-        }
+        // Mettre à jour le nombre de votes dans la table "produit"
+        $queryPrepared = $connect->prepare("
+            UPDATE " . DB_PREFIX . "produit
+            SET nbVote = nbVote + 1
+            WHERE idProduit = :produitId
+        ");
+        $queryPrepared->execute(['produitId' => $produitId]);
+
+        // Ajouter le vote de l'utilisateur à la session
+        $_SESSION['votes'][$produitId] = true;
     }
 }
 
