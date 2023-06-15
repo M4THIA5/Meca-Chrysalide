@@ -38,13 +38,12 @@
 
                 <label for="cgu">J'accepte les CGU
                     <a href="cgu.php" target="_blank">(Conditions Générales d'Utilisation)</a>
-
                 </label>
                 <input class="form-check-input" type="checkbox" name="cgu" id="cgu">
             </div>
             <center>
                 <div>
-                    <?php // Appel de la fonction pour obtenir l'image GD
+                    <?php /*// Appel de la fonction pour obtenir l'image GD
                         $imageGD = gdImage(selectImageForCapcha());
                         if ($imageGD !== null) {
                             // Utilisation de l'image GD, par exemple, affichage ou manipulation ultérieure
@@ -53,7 +52,7 @@
                             // Libération de la mémoire utilisée par l'image GD
                             imagedestroy($imageGD);
                             
-                        }
+                        }*/
                     ?>
                 </div>
                 <label>

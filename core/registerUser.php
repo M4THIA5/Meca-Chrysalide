@@ -8,7 +8,7 @@ require '../assets/PHPMailer/src/PHPMailer.php';
 require '../assets/PHPMailer/src/SMTP.php';
 
 
-
+print_r($_POST);
 if (
 	count($_POST) != 7
 	|| empty($_POST["lastname"])
