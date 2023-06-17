@@ -33,7 +33,7 @@ redirectIfNotConnected();?>
 					echo "<td>".$profile['email']."</td>";
 					echo "<td>".$profile["anniversaire"]."</td>";
 					if(empty($profile["telephone"])){
-						echo "<td> Ajouter un numéro de téléphone </td>";
+						echo "<td> <a href='profileModify.php'> Ajouter un numéro de téléphone </a></td>";
 					}else{
 						echo "<td>".$profile["telephone"]."</td>";
 					}
@@ -42,7 +42,7 @@ redirectIfNotConnected();?>
 				</tr>
 			</tbody>
 		</table>
-        <a class="btn btn-primary"href="profileModify.php">modifier le profil</a>
+        <a class="btn btn-primary" href="profileModify.php">modifier le profil</a>
     </label>
 
 <?php include('../template/footer.php'); ?>

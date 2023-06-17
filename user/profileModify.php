@@ -17,6 +17,14 @@ redirectIfNotConnected();
 	$profil = $queryPrepared->fetch();
 ?>
 
+<?php if (isset($_SESSION['errors'])) {
+            foreach ($_SESSION['errors'] as $error) {
+                echo '<div>' . $error . '</div>';
+            }
+            unset($_SESSION['errors']);
+        }
+?>
+
 <form action="../core/modifyUser.php" method="POST">
 
 	<table class="table">
@@ -36,19 +44,19 @@ redirectIfNotConnected();
 			<tbody>
 				<tr>
 				<?php
-					echo "<td> <input class='form-control' type='text' name='lastname' id='lastname' placeholder=".$profil["nom"]."> </td>";
 					echo "<td> <input class='form-control' type='text' name='firstname' id='firstname' placeholder=".$profil['prenom']."></td>";
-					echo "<td> <input class='form-control' type='email' name='email' placeholder=".$profil['email']."></td>";
+					echo "<td> <input class='form-control' type='text' name='lastname' id='lastename' placeholder=".$profil['nom']."></td>";
+					echo "<td> <input class='form-control' type='email' name='email' id='email' placeholder=".$profil['email']."></td>";
 					echo "<td>".$profil["anniversaire"]."</td>";
 					if(empty($profil["telephone"])){
-						echo "<td> Ajouter un numéro de téléphone </td>";
+						echo "<td><input class='form-control' type='text' name='telephone' id='telephone' placeholder='Ajoutez un numéro'></td>";
 					}else{
-						echo "<td>".$profil["telephone"]."</td>";
+						echo "<td> <input class='form-control' type='text' name='telephone' id='telephone' placeholder=".$profil['telephone']."></td>";
 					}
 				?>
-						<td><input class="form-control" type="text" name="pwdActuel" id="mdpActuel" ></td>
-						<td><input class="form-control" type="text" name="nouveauPwd" id="nouveauMdp" ></td>
-						<td><input class="form-control" type="text" name="confirmPwd" id="confirmMdp" ></td>
+						<td><input class="form-control" type="password" name="pwdActuel" id="mdpActuel" ></td>
+						<td><input class="form-control" type="password" name="nouveauPwd" id="nouveauMdp" ></td>
+						<td><input class="form-control" type="password" name="confirmPwd" id="confirmMdp" ></td>
 				<?php echo "<td>".$profil["dateInscription"]."</td>";?>
 				</tr>
 			</tbody>
