@@ -1,18 +1,20 @@
 <?php
 
-function cleanLastname($lastname)
-{
+function cleanLastname($lastname){
 	return strtoupper(trim($lastname));
 }
 
-function cleanFirstname($firstname)
-{
+function cleanFirstname($firstname){
 	return ucwords(strtolower(trim($firstname)));
 }
 
-function cleanEmail($email)
-{
+function cleanEmail($email){
 	return strtolower(trim($email));
+}
+
+function checkPhone($phone){
+	$pattern = "/^(06|07)(([ .-])\d{2}\3\d{2}\3\d{2}\3\d{2}|(\d{2}){4})$/";
+	return preg_match($pattern, $phone)===1;	//preg_match vérifie la regex renvoie un booleen 
 }
 
 function connectDB()
