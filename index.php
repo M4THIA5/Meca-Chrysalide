@@ -22,66 +22,72 @@
 
         </section>
     </header>
+    <?php
+    // Liste des oeuvres les plus populaires (les 3 premiers qui ont le plus de votes sont affichés)
+    $query = "SELECT p.idProduit, p.nomProduit, p.image, p.nbVote AS total_votes
+          FROM " . DB_PREFIX . "produit p
+          ORDER BY total_votes DESC
+          LIMIT 3";
+    $connect = connectDB();
+    $stmt = $connect->query($query);
+    $oeuvresPopulaires = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    ?>
+
     <section class="topoeuvres">
         <h3> Oeuvres les plus populaires </h3>
         <header>
-            <h4>Les oeuvres qui ont recu le plus de vote ces derniers mois : </h4>
+            <h4>Les oeuvres qui ont reçu le plus de votes ces derniers mois :</h4>
         </header>
-        <div class=" oeuvrespop">
-            <figure><a href="assets/img/chat1.jpg" target="_blank"> <img alt="une des oeuvre les plus populaires !"
-                        src="assets/img/chat1.jpg">
-                    <figcaption> Un Chat </figcaption>
-                </a>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
-            <figure> <a href="assets/img/chat2.jpg" target="_blank"> <img alt="une des oeuvre les plus populaires !"
-                        src="assets/img/chat2.jpg">
-                    <figcaption> Un autre Chat </figcaption>
-                    <div class="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-            </figure>
-            <figure> <a href="assets/img/chat3.jpg" target="_blank"> <img alt="une des oeuvre les plus populaires !"
-                        src="assets/img/chat3.jpg">
-                    <figcaption> Encore un autre Chat </figcaption>
-                    <div class="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-            </figure>
+        <div class="oeuvrespop">
+            <?php foreach ($oeuvresPopulaires as $oeuvre): ?>
+                <figure>
+                    <a href="assets/img/<?php echo $oeuvre['image']; ?>" target="_blank">
+                        <img alt="une des oeuvres les plus populaires !" src="<?php echo $oeuvre['image']; ?>">
+                        <figcaption>
+                            <?php echo $oeuvre['nomProduit']; ?><br>
+                            Nombre de votes :
+                            <?php echo $oeuvre['total_votes'] ?>
+                        </figcaption>
+                    </a>
+                </figure>
+            <?php endforeach; ?>
         </div>
     </section>
 
+
+
+
+    <?php
+    // Listes aléatoire des produits disponible en boutique (3 produits)
+    $query = "SELECT idProduit, nomProduit, image
+          FROM " . DB_PREFIX . "produit
+          WHERE vendu = 0
+          ORDER BY RAND()
+          LIMIT 3";
+    $connect = connectDB();
+    $stmt = $connect->query($query);
+    $apercuBoutique = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    ?>
 
     <section>
-        <h3> Apercu de la boutique </h3>
+        <h3> Aperçu de la boutique </h3>
         <header>
-            <h4> Quelques oeuvres disponibles à la boutique : </h4>
+            <h4> Quelques œuvres disponibles à la boutique :</h4>
         </header>
         <div class="shopview">
-            <figure><a href="assets/img/chat1.jpg" target="_blank"> <img alt="une des oeuvre les plus populaires !"
-                        src="assets/img/chat1.jpg">
-                    <figcaption> Un Chat </figcaption>
-                </a>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
-            <figure> <img alt="une des oeuvre les plus populaires !" src="assets/img/chat2.jpg">
-                <figcaption> Un autre Chat </figcaption>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
-            <figure> <img alt="une des oeuvre les plus populaires !" src="assets/img/chat3.jpg">
-                <figcaption> Encore un autre Chat </figcaption>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
-            </figure>
+            <?php foreach ($apercuBoutique as $produit): ?>
+                <figure>
+                    <a href="assets/img/<?php echo $produit['image']; ?>" target="_blank">
+                        <img alt="une des œuvres les plus populaires !" src="<?php echo $produit['image']; ?>">
+                        <figcaption>
+                            <?php echo $produit['nomProduit']; ?>
+                        </figcaption>
+                    </a>
+                </figure>
+            <?php endforeach; ?>
         </div>
     </section>
+
 </main>
 
 <?php include('template/footer.php'); ?>

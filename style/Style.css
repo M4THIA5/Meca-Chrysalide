@@ -30,6 +30,7 @@
 a {
     color: var(--color);
     text-decoration: none;
+
 }
 
 footer a {
@@ -62,7 +63,7 @@ nav {
     font-size: 1.5rem;
     font-weight: 500;
     padding: 2rem;
-    transition: color 1s;
+    transition: color 0.5s;
 
 
 }
@@ -138,6 +139,7 @@ header.baniere section {
 
 figcaption {
     color: var(--background-color);
+    font-size: 1.5rem;
 }
 
 figure {
@@ -292,4 +294,54 @@ tr.entete {
     right: 10px;
     cursor: pointer;
     color: var(--color)
+}
+
+.commentaires {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+}
+
+.commentField {
+    height: 10rem;
+    width: 40rem;
+    margin-bottom: 2rem;
+}
+
+.formAddProduct {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+}
+
+.formAddProduct label {
+    width: 150px;
+    display: inline-block;
+    text-align: right;
+}
+
+.panneauUtilisateurs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+
+
+}
+
+.adminboutique {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+    width: 60%;
 }

@@ -59,7 +59,8 @@ function generateSortLink($text, $sortKey)
 }
 
 
-function selectImageForCapcha() {
+function selectImageForCapcha()
+{
 	// Chemin du dossier contenant les images
 	$dossier = '../assets/capcha/';
 
@@ -67,7 +68,7 @@ function selectImageForCapcha() {
 	$extensions = ['jpg', 'jpeg', 'png'];
 
 	// Récupération de la liste des fichiers dans le dossier
-	$fichiers = glob($dossier . '*.{'.implode(',', $extensions).'}', GLOB_BRACE);
+	$fichiers = glob($dossier . '*.{' . implode(',', $extensions) . '}', GLOB_BRACE);
 
 	// Vérification s'il y a des images dans le dossier
 	if (count($fichiers) > 0) {
@@ -77,15 +78,16 @@ function selectImageForCapcha() {
 		$imageCapcha = "/MecaChrysalide/" . $imageCapchaAleatoire; // Concatène les deux chaînes de caractères pour obtenir le chemin absolu
 
 		// Affichage de l'image
-		echo '<img src="'.$imageCapcha.'" alt="image">';
-		
+		echo '<img src="' . $imageCapcha . '" alt="image">';
+
 		return $imageCapcha;
 	} else {
 		echo 'Aucune image disponible.';
 	}
 }
 
-function gdImage($cheminImage) {
+function gdImage($cheminImage)
+{
 	$cheminImage = pathCapcha . $cheminImage;
 
 	// Vérification si le fichier existe
@@ -150,14 +152,31 @@ function gdImage($cheminImage) {
 }
 
 
-function resizeImageGD($image){
+function resizeImageGD($image)
+{
 	// Redimensionner l'image
 	$image_resized = imagecreatetruecolor(150, 150);
 	imagecopyresampled($image_resized, $image, 0, 0, 0, 0, 150, 150, imagesx($image), imagesy($image));
 	return $image_resized;
 }
 
+function isAdmin($userId)
+{
+	$connect = connectDB();
+	$queryPrepared = $connect->prepare("
+        SELECT droitAdmin FROM " . DB_PREFIX . "utilisateur WHERE id = :userId
+    ");
+	$queryPrepared->execute([
+		'userId' => $userId
+	]);
+	$result = $queryPrepared->fetch(PDO::FETCH_ASSOC);
 
+	if ($result && $result['droitAdmin'] == 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
 
 
