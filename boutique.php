@@ -8,7 +8,7 @@ include('template/navbar.php');
 <?php
 
 $connect = connectDB();
-$queryPrepared = $connect->query("SELECT * FROM " . DB_PREFIX . "produit");
+$queryPrepared = $connect->query("SELECT * FROM " . DB_PREFIX . "produit WHERE obsolete = 0");
 $produits = $queryPrepared->fetchAll();
 
 ?>
@@ -20,19 +20,22 @@ $produits = $queryPrepared->fetchAll();
 <section>
     <h4> Œuvres disponibles </h4>
     <div class="boutique">
-        <?php foreach ($produits as $produit): ?>
+        <?php
+        // Boucle foreach pour afficher les produits et leur informations a partir du resultat de la requete sql
+        foreach ($produits as $produit): ?>
             <figure>
                 <img alt="<?php echo $produit['description']; ?>" src="<?php echo $produit['image']; ?>">
                 <figcaption>
-                    <?php echo $produit['description']; ?>
+                    <?php echo $produit['nomProduit'] . " - ";
+                    echo $produit['description']; ?>
                 </figcaption>
                 <h4>Prix :
                     <?php echo $produit['prix']; ?>
                 </h4>
-                <a href="commentaires.php?produitId=<?php echo $produit["idProduit"]; ?>">Commentaires</a>
+                <a href="commentaires.php?produitId=<?php echo $produit["idProduit"]; ?>"><button>Commentaires</button></a>
                 <?php if ($produit['vendu'] == 0): ?>
                     <a href="facturation.php?id=<?php echo $produit['idProduit']; ?>">
-                        <button type="button">Acheter</button>
+                        <button type="button">Commander</button>
                     </a>
                 <?php else: ?>
                     <h4>Vendu</h4>

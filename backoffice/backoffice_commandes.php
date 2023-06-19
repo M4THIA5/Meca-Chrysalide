@@ -54,7 +54,7 @@ foreach ($results as $commande) {
             <td>' . $commande['nomProduit'] . '</td>
             <td>' ?>
     <?php if ($commande['est_acceptee'] == '0') { ?>
-        <form action="core/acceptCommand.php" method="post">
+        <form action="../core/acceptCommand.php" method="post">
             <input type="hidden" name="idCommande" value="<?php echo $commande['idCommande']; ?>">
             <input type="submit" value="Accepter">
         </form>

@@ -2,8 +2,6 @@
 require('functions.php');
 require('../conf.inc.php');
 
-// Vérifier si l'utilisateur est connecté en tant qu'administrateur
-// A FAIRE
 // Vérifier si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérifier si l'ID de commande est présent dans la requête
