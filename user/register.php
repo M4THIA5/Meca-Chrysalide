@@ -42,22 +42,21 @@
                 <input class="form-check-input" type="checkbox" name="cgu" id="cgu">
             </div>
             <center>
-                <div>
-                    <?php /*// Appel de la fonction pour obtenir l'image GD
-                        $imageGD = gdImage(selectImageForCapcha());
-                        if ($imageGD !== null) {
-                            // Utilisation de l'image GD, par exemple, affichage ou manipulation ultérieure
-                            // ...
-
-                            // Libération de la mémoire utilisée par l'image GD
-                            imagedestroy($imageGD);
-                            
-                        }*/
-                    ?>
-                </div>
+                <?php 
+                    gdImage(selectImageForCapcha());
+                    $capcha = glob(pathCapcha."/MecaChrysalide/assets/capcha/imagesDecoupe/*.jpg");   
+                    foreach($capcha as $key=>$image){
+                        if($key %3 == 0){
+                            echo '<br>';
+                        }
+                        echo '<img style="border:4px solid white" src="../assets/capcha/imagesDecoupe/image'.$key.'.jpg" alt="Image GD Capcha">';
+                    }
+                    echo '<br>'
+                ?>
                 <label>
                     <button>S'inscrire</button>
                 </label>
+            </div>
             </center>
         </form>
     </div>
