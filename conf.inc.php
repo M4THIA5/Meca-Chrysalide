@@ -14,3 +14,4 @@ define("DB_PORT", "3306");
 define("DB_USER", "meca");
 define("DB_PWD", "rick**dA51N");
 define("DB_PREFIX", "lsm3_");
+define("pathCapcha", "C:/xampp/htdocs");

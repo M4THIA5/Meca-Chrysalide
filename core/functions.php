@@ -65,7 +65,7 @@ function selectImageForCapcha()
 	$dossier = '../assets/capcha/';
 
 	// Liste des extensions d'images autorisées
-	$extensions = ['jpg', 'jpeg', 'png'];
+	$extensions = ['jpg', 'jpeg'];
 
 	// Récupération de la liste des fichiers dans le dossier
 	$fichiers = glob($dossier . '*.{' . implode(',', $extensions) . '}', GLOB_BRACE);
@@ -76,9 +76,6 @@ function selectImageForCapcha()
 		$imageCapchaAleatoire = $fichiers[array_rand($fichiers)];
 		$imageCapchaAleatoire = substr($imageCapchaAleatoire, 3); // Supprime les 3 premiers caractères (../)
 		$imageCapcha = "/MecaChrysalide/" . $imageCapchaAleatoire; // Concatène les deux chaînes de caractères pour obtenir le chemin absolu
-
-		// Affichage de l'image
-		echo '<img src="' . $imageCapcha . '" alt="image">';
 
 		return $imageCapcha;
 	} else {
@@ -105,12 +102,6 @@ function gdImage($cheminImage)
 		case 'jpg':
 			$image = imagecreatefromjpeg($cheminImage);
 			break;
-		case 'png':
-			$image = imagecreatefrompng($cheminImage);
-			break;
-		case 'gif':
-			$image = imagecreatefromgif($cheminImage);
-			break;
 		default:
 			echo 'Format d\'image non pris en charge.';
 			return null;
@@ -124,31 +115,10 @@ function gdImage($cheminImage)
 
 	// Redimensionner l'image
 	$imageResized = resizeImageGD($image);
-
-	// Envoi de l'image redimensionnée avec le bon en-tête de type MIME
-	switch ($extension) {
-		case 'jpeg':
-		case 'jpg':
-			header('Content-Type: image/jpeg');
-			imagejpeg($imageResized);
-			break;
-		case 'png':
-			header('Content-Type: image/png');
-			imagepng($imageResized);
-			break;
-		case 'gif':
-			header('Content-Type: image/gif');
-			imagegif($imageResized);
-			break;
-		default:
-			echo 'Impossible d\'afficher l\'image.';
-			return null;
+	$imageDecoupe = decouperImageGD($imageResized, 3, 3);
+	foreach ($imageDecoupe as $key => $image) {
+		imagejpeg($image, pathCapcha . '/MecaChrysalide/assets/capcha/imagesDecoupe/image' . $key . '.jpg', 100);
 	}
-
-	// Libération de la mémoire en détruisant l'image'
-	imagedestroy($imageResized);
-
-	return $image;
 }
 
 
@@ -157,7 +127,49 @@ function resizeImageGD($image)
 	// Redimensionner l'image
 	$image_resized = imagecreatetruecolor(150, 150);
 	imagecopyresampled($image_resized, $image, 0, 0, 0, 0, 150, 150, imagesx($image), imagesy($image));
+	//imagecopyresampled(
+	//$image_resized, 
+	//$image, 
+	//0, 0,  Les coordonnées de la position supérieure gauche dans l'image de destination où l'image source sera copiée.
+	//0, 0,  Les coordonnées de la position supérieure gauche dans l'image source à partir de laquelle la copie doit commencer.
+	//150, 150,  La largeur et la hauteur de la zone de destination dans l'image de destination. Dans cet exemple, l'image sera redimensionnée à une taille de 150x150 pixels.
+	//imagesx($image), 
+	//imagesy($image)	)
+
+	// Libération de la mémoire en détruisant l'image
+	imagedestroy($image);
 	return $image_resized;
+}
+
+
+function decouperImageGD($image, $nbColonnes, $nbLignes)
+{
+	// Récupération des dimensions de l'image
+	$largeur = imagesx($image);
+	$hauteur = imagesy($image);
+
+	// Calcul de la largeur et de la hauteur d'un morceau
+	$largeurMorceau = $largeur / $nbColonnes;
+	$hauteurMorceau = $hauteur / $nbLignes;
+
+	// Création d'un tableau pour stocker les morceaux d'image
+	$morceaux = array();
+
+	// Découpage de l'image en morceaux
+	for ($i = 0; $i < $nbLignes; $i++) {
+		for ($j = 0; $j < $nbColonnes; $j++) {
+			// Création d'une nouvelle image pour le morceau
+			$morceau = imagecreatetruecolor($largeurMorceau, $hauteurMorceau);
+
+			// Copie du morceau de l'image d'origine dans le morceau nouvellement créé
+			imagecopy($morceau, $image, 0, 0, $j * $largeurMorceau, $i * $hauteurMorceau, $largeurMorceau, $hauteurMorceau);
+
+			// Ajout du morceau au tableau des morceaux
+			$morceaux[] = $morceau;
+		}
+	}
+	// Retourne le tableau contenant les morceaux d'image
+	return $morceaux;
 }
 
 function isAdmin($userId)
