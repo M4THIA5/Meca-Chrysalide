@@ -76,8 +76,6 @@ function selectImageForCapcha() {
 		$imageCapchaAleatoire = $fichiers[array_rand($fichiers)];
 		$imageCapchaAleatoire = substr($imageCapchaAleatoire, 3); // Supprime les 3 premiers caractères (../)
 		$imageCapcha = "/MecaChrysalide/" . $imageCapchaAleatoire; // Concatène les deux chaînes de caractères pour obtenir le chemin absolu
-		// Affichage de l'image
-		//echo '<img src="'.$imageCapcha.'" alt="image">';
 		
 		return $imageCapcha;
 	} else {

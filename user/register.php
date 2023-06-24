@@ -133,9 +133,7 @@
         if (capchaIsResolved(imageOrigin, imageMelange)) {
         submitBtn.removeAttribute('disabled');
         } else {
-                console.log(submitBtn.disabled);
                 submitBtn.setAttribute('disabled', true); // Désactiver le bouton
-                console.log(submitBtn.disabled);
         sleep(2000).then(function() {
             testCaptcha();
         });
@@ -145,7 +143,6 @@
     let imageOrigin = [];
     for (let i = 0; i < 9; i++) {
         const imagePiece = document.querySelector('#image-piece' + i);
-        //console.log(imagePiece);
         imageOrigin.push(imagePiece.currentSrc);
     }
 
