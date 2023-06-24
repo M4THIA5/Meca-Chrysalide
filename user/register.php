@@ -39,6 +39,7 @@
                     <a href="cgu.php" target="_blank">(Conditions Générales d'Utilisation)</a>
 
                 </label>
+                <input class="form-check-input" type="checkbox" name="cgu" id="cgu">
                 <div id="capcha">
                     <?php
                     gdImage(selectImageForCapcha());
@@ -56,7 +57,7 @@
                     <button id="submitBtn" disabled>S'inscrire</button>
                 </label>
             </div>
-            <input class="form-check-input" type="checkbox" name="cgu" id="cgu">
+
     </div>
 
     </form>

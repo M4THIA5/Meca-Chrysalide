@@ -5,7 +5,7 @@
         if (isset($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
             ?>
-            <li id="current-time"></li>
+
             <?php
             if (isAdmin($userId)) {
 
@@ -14,7 +14,7 @@
         }
         ?>
 
-
+        <li id="current-time"></li>
         <li><a class="navbar-link" href="/MecaChrysalide/index.php">Home</a></li>
         <li><a class="navbar-link" href="/MecaChrysalide/apropos.php">A Propos</a></li>
         <li><a class="navbar-link" href="/MecaChrysalide/boutique.php">Boutique</a></li>
