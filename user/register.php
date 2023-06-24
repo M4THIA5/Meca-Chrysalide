@@ -18,15 +18,14 @@
 
         <form action="../core/registerUser.php" method="POST">
             <input class="form-control" name="lastname" id="lastname" placeholder="Votre Nom" required="required">
-            <input class="form-control" name="firstname" id="firstname" placeholder="Votre prénom"
-                required="required">
+            <input class="form-control" name="firstname" id="firstname" placeholder="Votre prénom" required="required">
 
             <label for="birthday" class="form-label">
                 Votre date de naissance :
             </label>
 
-            <input class="form-control" type="date" id="birthday" name="birthday"
-                placeholder="Votre date de naissance" required="required">
+            <input class="form-control" type="date" id="birthday" name="birthday" placeholder="Votre date de naissance"
+                required="required">
             <div class="col-md-6">
                 <input class="form-control" type="email" name="email" placeholder="Votre email" required="required">
 
@@ -42,24 +41,10 @@
                 </label>
                 <input class="form-check-input" type="checkbox" name="cgu" id="cgu">
             </div>
-            <center>
-                <div>
-                    <?php // Appel de la fonction pour obtenir l'image GD
-                        $imageGD = gdImage(selectImageForCapcha());
-                        if ($imageGD !== null) {
-                            // Utilisation de l'image GD, par exemple, affichage ou manipulation ultérieure
-                            // ...
+            <label>
+                <button>S'inscrire</button>
+            </label>
 
-                            // Libération de la mémoire utilisée par l'image GD
-                            imagedestroy($imageGD);
-                            
-                        }
-                    ?>
-                </div>
-                <label>
-                    <button>S'inscrire</button>
-                </label>
-            </center>
         </form>
     </div>
 </div>

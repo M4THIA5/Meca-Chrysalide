@@ -5,11 +5,11 @@
         if (isset($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
             ?>
-
+            <li id="current-time"></li>
             <?php
             if (isAdmin($userId)) {
 
-                echo '<li><a class="navbar-link" href="/MecaChrysalide/backoffice/backoffice.php">Panneau de configuration administrateur</a></li>';
+                echo '<li><a class="navbar-link" href="/MecaChrysalide/backoffice/backoffice.php">Administration</a></li>';
             }
         }
         ?>
@@ -29,4 +29,5 @@
         <?php } ?>
 
     </ul>
+    <script src="/MecaChrysalide/js/currenttime.js"></script>
 </nav>

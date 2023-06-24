@@ -16,11 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
 
     // Rediriger vers la page d'administration de la boutique
-    header("Location: adminBoutique.php");
+    header("Location: backoffice/adminBoutique.php");
     exit();
 } else {
     // Rediriger vers une autre page en cas de tentative d'accès direct à ce fichier sans formulaire
-    header("Location: adminBoutique.php");
+    header("Location: backoffice/adminBoutique.php");
     exit();
 }
 ?>

@@ -18,6 +18,7 @@ echo '<section class="recapProfil">
     <p><b><u> Prénom :</u></b> ' . $results["prenom"] . '</p>
     <p> <b><u>Nom :</u></b> ' . $results["nom"] . '</p>
     <p> <b><u>Email :</u></b> ' . $results["email"] . '</p>
+    <p> <b><u>Téléphone :</u></b> ' . $results["telephone"] . '</p>
     <p> <b><u>Date de naissance :</u></b> ' . $results["anniversaire"] . '</p>
     <p> <b><u>Date d\'inscription :</u></b> ' . $results["dateInscription"] . '</p>
     
@@ -77,8 +78,19 @@ foreach ($results as $result) {
         <p> <b><u>Téléphone </u></b>: ' . $result["telephone"] . '</p>
         <form action="cancelOrder.php" method="post">
         <input type="hidden" name="idCommande" value="' . $result['idCommande'] . '; ?>">
-        <button type="submit">Annuler la commande</button>
+        <button type="submit">Annuler la commande</button></form>
+    <a href="modifier_coordonnees.php?idCommande=' . $result["idCommande"] . '"><button>Modifier les coordonnées de ma commande</button></a>
+
         </section>';
 }
 ;
 ?>
+<section class="pdfUserLogs">
+    <h3> Vos logs </h3>
+    <h4> Vous pouvez récuperer toutes vos informations qui ont été enregistrés sur MecaChrysalide.com sous format pdf,
+        en cliquant sur le bouton ci-dessous </h4>
+    <a href="pdfUserLogs.php"><button type="button">Télécharger vos logs</button></a>
+</section>
+
+<?php
+require_once('../template/footer.php'); ?>

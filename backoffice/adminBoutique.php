@@ -15,7 +15,7 @@ $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($produits as $produit) {
     echo "<figure class='adminboutique'>
      <h4>" . $produit['nomProduit'] . "</h4>
-     <img src='" . $produit['image'] . "' alt='" . $produit['description'] . "'>
+     <img src='../" . $produit['image'] . "' alt='" . $produit['description'] . "'>
      <p>" . $produit['description'] . "</p>";
     if ($produit['obsolete'] == 1) {
         echo "<form method='post' action='../retablirProduit.php'>
@@ -25,7 +25,7 @@ foreach ($produits as $produit) {
     } else {
 
 
-        echo " <form method='post' action='supprimer_produit.php'>
+        echo " <form method='post' action='../supprimer_produit.php'>
      <input type='hidden' name='produit_id' value='" . $produit['idProduit'] . "'>
      <button type='submit'>Supprimer</button>
      </form>
@@ -39,5 +39,5 @@ foreach ($produits as $produit) {
     }
     echo "</figure>";
 }
-include('template/footer.php');
+include('../template/footer.php');
 ?>

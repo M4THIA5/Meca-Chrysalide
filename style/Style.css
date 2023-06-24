@@ -33,6 +33,12 @@ a {
 
 }
 
+footer {
+    background-color: var(--color);
+    margin-top: 3rem;
+    color: var(--background-color);
+}
+
 footer a {
     color: var(--color);
     text-decoration: underline;
@@ -45,7 +51,8 @@ footer span {
 
 nav ul {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: space-evenly;
     list-style-type: none;
     margin: 0;
 }
@@ -55,6 +62,11 @@ nav {
     position: sticky;
     top: 0;
     height: 2rem;
+}
+
+nav #current-time {
+    color: black;
+    font-size: 1.5rem;
 }
 
 .navbar-link {
@@ -344,4 +356,20 @@ tr.entete {
     margin-bottom: 5rem;
     margin-top: 2rem;
     width: 60%;
+}
+
+#search-input {
+    width: 30%;
+}
+
+.modifyProfil table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-separator {
+    background-color: var(--color);
+    color: var(--background-color);
+    font-weight: bold;
 }
