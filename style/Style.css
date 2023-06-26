@@ -373,3 +373,8 @@ tr.entete {
     color: var(--background-color);
     font-weight: bold;
 }
+
+.clicked {
+    cursor: url("/MecaChrysalide/assets/img/meca-cursor_15px.png"), auto;
+  }
+  
