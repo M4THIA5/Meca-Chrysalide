@@ -65,7 +65,7 @@ function selectImageForCapcha()
 	$dossier = '../assets/capcha/';
 
 	// Liste des extensions d'images autorisées
-	$extensions = ['jpg', 'jpeg'];
+	$extensions = ['jpg', 'jpeg', 'png'];
 
 	// Récupération de la liste des fichiers dans le dossier
 	$fichiers = glob($dossier . '*.{' . implode(',', $extensions) . '}', GLOB_BRACE);
@@ -102,6 +102,9 @@ function gdImage($cheminImage)
 		case 'jpg':
 			$image = imagecreatefromjpeg($cheminImage);
 			break;
+		case 'png':
+			$image = imagecreatefrompng($cheminImage);
+			break;
 		default:
 			echo 'Format d\'image non pris en charge.';
 			return null;
@@ -119,6 +122,7 @@ function gdImage($cheminImage)
 	foreach ($imageDecoupe as $key => $image) {
 		imagejpeg($image, pathCapcha . '/MecaChrysalide/assets/capcha/imagesDecoupe/image' . $key . '.jpg', 100);
 	}
+	
 }
 
 
